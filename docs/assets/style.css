@@ -124,8 +124,8 @@ a {
 
 .note_data_container{
     display: grid;
-    grid-template-columns: 60px 1fr 125px;
-    grid-gap: 10px;
+    grid-template-columns: 60px 1fr 112px;
+    grid-gap: 7px;
 }
 
 .note_icon_img{

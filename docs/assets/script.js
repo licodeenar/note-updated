@@ -50,6 +50,15 @@ function drawTable(jasons, elementId, isJson) {
                     '<th><div class="note_title">' + 
                     '<div>なまえ / ID</div><div>最終更新日</div></div></th></tr>'
             for (let i = 0; i < obj.length; i++) {
+                let daydiff = obj[i].daydiff;
+                let lastupdated = obj[i].lastupdated;
+                if(daydiff == ''){
+                    daydiff = '記事なし';
+                }
+                if(lastupdated == ''){
+                    lastupdated = '-';
+                }
+
                 html += '<tr>' + 
                     //'<td class="note_data_id">' + (i + 1) + '</td>' + //列番号
                     '<td>' +
@@ -59,8 +68,8 @@ function drawTable(jasons, elementId, isJson) {
                     '<div class="note_username">' + 
                     '<div class="note_username_nickname"><a href="' + obj[i].url + '" target="_blank">' + obj[i].nickname + '</a></div>' + 
                     '<div class="note_data_name">' + obj[i].urlname + '</div></div>' + 
-                    '<div class="note_daydiff"><div><b>' + obj[i].daydiff + '</b></div>' +
-                    '<div>' + obj[i].lastupdated + '</div></div>' +
+                    '<div class="note_daydiff"><div><b>' + daydiff + '</b></div>' +
+                    '<div>' + lastupdated + '</div></div>' +
                     '</div></td></tr>';
             }
             html += '</table>';

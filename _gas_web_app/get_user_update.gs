@@ -285,7 +285,6 @@ function calculateDateTimeDifference(targetDateTime) {
   } else if (daysDifference > 0) {
     if(daysDifference >= 14){
       return `${Math.floor(daysDifference/7)}週間前`
-      // return '2週間前';  
     }else{
       return `${daysDifference}日前`;
     }

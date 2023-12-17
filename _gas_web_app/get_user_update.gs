@@ -7,6 +7,9 @@ function main(userId, key, ascending) {
   //ユーザのFolloing数を取得
   const followingCount = getFollowingCount(userId);
   console.log('フォロー数： ' + followingCount);
+  if(followingCount == null){
+    throw new Error('ユーザの取得に失敗しました。');
+  }
 
   //ユーザリストを取得
   let users = getFollowingUsers(userId, key, followingCount);
@@ -261,9 +264,11 @@ function calculateDateTimeDifference(targetDateTime) {
   } else if (monthDiff > 0) {
     return `${monthDiff}ヶ月前`;
   } else if (dayDiff > 0) {
-    if(dayDiff >= 21 && dayDiff < 28){
+    if(dayDiff >= 28){
+      return '4週間前';
+    }else if(dayDiff >= 21){
       return '3週間前';
-    }else if(dayDiff >= 14 && dayDiff < 21){
+    }else if(dayDiff >= 14){
       return '2週間前';  
     }else{
       return `${dayDiff}日前`;
@@ -288,3 +293,7 @@ function printLog(users){
       users[i].url);
   }
 }
+
+
+
+

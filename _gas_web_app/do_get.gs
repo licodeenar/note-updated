@@ -17,7 +17,7 @@ function doGet(e){
     }
   }catch(e){
     console.log(e);
-    result = 'error: ' + e.message;
+    result = 'error';
   }
 
   //Mime TypeをJSONに設定

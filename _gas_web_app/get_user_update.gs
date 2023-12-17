@@ -253,30 +253,46 @@ function calculateDateTimeDifference(targetDateTime) {
   const now = new Date();
   const target = new Date(targetDateTime);
 
-  const yearDiff = now.getFullYear() - target.getFullYear();
-  const monthDiff = now.getMonth() - target.getMonth();
-  const dayDiff = now.getDate() - target.getDate();
-  const hourDiff = now.getHours() - target.getHours();
-  const minuteDiff = now.getMinutes() - target.getMinutes();
+  let yearDiff = now.getFullYear() - target.getFullYear();
+  let monthDiff = now.getMonth() - target.getMonth();
+  let dayDiff = now.getDate() - target.getDate();
+  //let hourDiff = now.getHours() - target.getHours();
+  //let minuteDiff = now.getMinutes() - target.getMinutes();
+
+  if(yearDiff > 0){
+    if(monthDiff < 0){
+      yearDiff--;
+    }else if(monthDiff == 0 && dayDiff < 0){
+      yearDiff--;
+      monthDiff = 12;
+    }
+  }
+  if(monthDiff > 0){
+    if(dayDiff < 0){
+      monthDiff--;
+    }
+  }
+
+  // 指定された日時と現在日時の差分をミリ秒で取得し、日・時・分に変換
+  const daysDifference = Math.floor((now - target) / (24 * 60 * 60 * 1000));
+  const hoursDifference = Math.floor((now - target) / (60 * 60 * 1000));
+  const minDifference = Math.floor((now - target) / (60 * 1000));  
 
   if (yearDiff > 0) {
     return `${yearDiff}年前`;
   } else if (monthDiff > 0) {
     return `${monthDiff}ヶ月前`;
-  } else if (dayDiff > 0) {
-    if(dayDiff >= 28){
-      return '4週間前';
-    }else if(dayDiff >= 21){
-      return '3週間前';
-    }else if(dayDiff >= 14){
-      return '2週間前';  
+  } else if (daysDifference > 0) {
+    if(daysDifference >= 14){
+      return `${Math.floor(daysDifference/7)}週間前`
+      // return '2週間前';  
     }else{
-      return `${dayDiff}日前`;
+      return `${daysDifference}日前`;
     }
-  } else if (hourDiff > 0) {
-    return `${hourDiff}時間前`;
-  } else if (minuteDiff > 0) {
-    return `${minuteDiff}分前`;
+  } else if (hoursDifference > 0) {
+    return `${hoursDifference}時間前`;
+  } else if (minDifference > 0) {
+    return `${minDifference}分前`;
   } else {
     return 'たった今';
   }
@@ -293,7 +309,3 @@ function printLog(users){
       users[i].url);
   }
 }
-
-
-
-

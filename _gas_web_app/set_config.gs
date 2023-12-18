@@ -7,7 +7,7 @@ const CONF = function (){
     API_URL:{
       USER:'https://note.com/api/v2/creators/#__userid__#',
       FOLLOWS: 'https://note.com/api/v2/creators/#__userid__#/#__key__#?per=20&page=',
-      CONTENTS: 'https://note.com/api/v2/creators/#__userid__#/contents?kind=note&page=1&per=16&disabled_pinned=true&with_notes=false'
+      CONTENTS: 'https://note.com/api/v2/creators/#__userid__#/contents?kind=note&page=1&per=1&disabled_pinned=true&with_notes=false'
     }
   }
 }();

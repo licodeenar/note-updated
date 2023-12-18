@@ -248,53 +248,77 @@ function formatJapaneseDate(dateString) {
 }
 
 //--------------------------------------------------
+// 日付型のデータフォーマット
+function formatDate(date, format) {
+  format = format.replace(/yyyy/g, date.getFullYear());
+  format = format.replace(/MM/g, ('0' + (date.getMonth() + 1)).slice(-2));
+  format = format.replace(/dd/g, ('0' + date.getDate()).slice(-2));
+  format = format.replace(/HH/g, ('0' + date.getHours()).slice(-2));
+  format = format.replace(/mm/g, ('0' + date.getMinutes()).slice(-2));
+  format = format.replace(/ss/g, ('0' + date.getSeconds()).slice(-2));
+  format = format.replace(/SSS/g, ('00' + date.getMilliseconds()).slice(-3));
+  return format;
+};
+
+//--------------------------------------------------
 // 現在時刻との差分を表示する
 function calculateDateTimeDifference(targetDateTime) {
   const now = new Date();
   const target = new Date(targetDateTime);
 
+  //同年・同月で比較する用
+  const compNow = new Date(formatDate(now, '2023-12-dd HH:mm:ss'));
+  const compTarget = new Date(formatDate(target, '2023-12-dd HH:mm:ss'));
+  
   let yearDiff = now.getFullYear() - target.getFullYear();
   let monthDiff = now.getMonth() - target.getMonth();
-  let dayDiff = now.getDate() - target.getDate();
-  //let hourDiff = now.getHours() - target.getHours();
-  //let minuteDiff = now.getMinutes() - target.getMinutes();
 
+  //年の計算
   if(yearDiff > 0){
     if(monthDiff < 0){
       yearDiff--;
-    }else if(monthDiff == 0 && dayDiff < 0){
+    }else if(monthDiff == 0 && (compNow - compTarget) < 0){
       yearDiff--;
       monthDiff = 12;
     }
   }
+  if (yearDiff > 0) {
+    return `${yearDiff}年前`;
+  }
+
+  //月の計算
   if(monthDiff > 0){
-    if(dayDiff < 0){
+    if((compNow - compTarget) < 0){
       monthDiff--;
     }
   }
-
-  // 指定された日時と現在日時の差分をミリ秒で取得し、日・時・分に変換
-  const daysDifference = Math.floor((now - target) / (24 * 60 * 60 * 1000));
-  const hoursDifference = Math.floor((now - target) / (60 * 60 * 1000));
-  const minDifference = Math.floor((now - target) / (60 * 1000));  
-
-  if (yearDiff > 0) {
-    return `${yearDiff}年前`;
-  } else if (monthDiff > 0) {
+  if (monthDiff > 0) {
     return `${monthDiff}ヶ月前`;
-  } else if (daysDifference > 0) {
+  }
+
+  //週と日の計算
+  const daysDifference = Math.floor((now - target) / (24 * 60 * 60 * 1000));
+  if (daysDifference > 0) {
     if(daysDifference >= 14){
-      return `${Math.floor(daysDifference/7)}週間前`
+      return `${Math.floor(daysDifference/7)}週間前`;
     }else{
       return `${daysDifference}日前`;
     }
-  } else if (hoursDifference > 0) {
+  } 
+
+  //時の計算
+  const hoursDifference = Math.floor((now - target) / (60 * 60 * 1000));
+  if (hoursDifference > 0) {
     return `${hoursDifference}時間前`;
-  } else if (minDifference > 0) {
-    return `${minDifference}分前`;
-  } else {
-    return 'たった今';
   }
+
+  // 分の計算
+  const minDifference = Math.floor((now - target) / (60 * 1000));  
+  if (minDifference > 0) {
+    return `${minDifference}分前`;
+  }
+  
+  return 'たった今';
 }
 
 // --------------------------------------------------
@@ -308,3 +332,8 @@ function printLog(users){
       users[i].url);
   }
 }
+
+
+
+
+

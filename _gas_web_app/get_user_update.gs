@@ -71,7 +71,7 @@ function getLastUpdate(users){
     for(let i = 0; i < responses.length; i++){
       const json_data = JSON.parse(responses[i].getContentText('UTF-8'))['data'];
       if(json_data['contents'] == null){
-        //ユーザが存在しない場合（退会ユーザ） -> スキップ
+        //ユーザが存在しない場合 -> スキップ
         // DEBUG
         //console.log(request_users[i]);
       }

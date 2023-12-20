@@ -1,5 +1,4 @@
 'use strict';
-
 // --------------------------------------------------
 // fetchALLで非同期で処理を行う
 // フォローしているユーザのリストを取得する
@@ -292,7 +291,7 @@ function calculateDateTimeDifference(targetDateTime) {
       monthDiff--;
     }
   }
-  if (monthDiff > 0) {
+  if(monthDiff > 0) {
     return `${monthDiff}ヶ月前`;
   }
 

@@ -153,6 +153,12 @@ function escapeHtml(str) {
 '/exec?id=' + encodeURIComponent(noteId) + '&key=' + encodeURIComponent(form.note_key.value)
 ```
 
+**注意（POST送信のツール）**: notelist の mutual_follow（POSTでID/パスワードを送る）では、
+GAS側がエンコード前提で値を受け取らないため、`encodeURIComponent()` を適用すると
+記号を含むパスワードでログインエラーになる。POSTでGASに送るツールに適用する場合は、
+GAS側がパラメータをどうパースしているかを確認してから適用すること
+（確認できない場合はエンコードしない＝従来挙動を維持する）。
+
 ### 4-3. JSON.parse の例外処理
 
 APIが不正なレスポンス（HTMLのエラーページ等）を返すと `JSON.parse()` が例外を投げ、

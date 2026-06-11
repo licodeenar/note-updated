@@ -19,17 +19,17 @@
 
 <body>
     <header>
-        <a href="https://licodeenar.github.io/"><img class="cp_icon" src="https://github.com/licodeenar.png"></a>
+        <a href="https://licodeenar.github.io/"><img class="cp_icon" src="https://github.com/licodeenar.png" alt="licodeenar"></a>
     </header>
     <main class="cat_top">
         <div class="cp_contents">
             <h1>【note】おともだち更新状況チェック</h1>
-            <div class="cp_explain">
-                ・フォロー中のおともだちを取得します。<br>
-                ・最後に記事をアップした日で並び替え。<br>
-                ・最大500人+α まで表示します。<br>
-                ・おともだちが多いとそこそこ時間かかります。
-            </div><br>
+            <ul class="cp_explain">
+                <li>フォロー中のおともだちを取得します。</li>
+                <li>最後に記事をアップした日で並び替え。</li>
+                <li>最大500人+α まで表示します。</li>
+                <li>おともだちが多いとそこそこ時間かかります。</li>
+            </ul>
 
             <!-- 情報入力 -->
             <form id="setting" action="JavaScript:getNoteList()">
@@ -38,7 +38,7 @@
                     <label for="note_key1">昇順（古い順）</label><br>
                     <input type="radio" id="note_key2" name="note_key" value="desc">
                     <label for="note_key2">降順（新しい順）</label><br>
-                </div><br>
+                </div>
                 <input type="text" class="cp_input" id="note_id" placeholder="noteのIDを入力"><br>
                 <input type="button" class="cp_button" id="note_exe" value="更新状況をチェック" onclick="getNoteList()"><br>
                 <input type="checkbox" name="note_json" id="note_json">

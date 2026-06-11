@@ -9,7 +9,7 @@ function getNoteList() {
     let isJson = form.note_json.checked;
 
     //テーブルをクリア＆フォームをロック
-    document.getElementById(resultDispId).innerHTML = '<img src="img/waiting.gif"><br>しばらく時間がかかります。。。';
+    document.getElementById(resultDispId).innerHTML = '<div class="note_status note_loading">しばらく時間がかかります。。。</div>';
     setFormDisabled(true);
 
     req.open("GET", url, true);
@@ -38,41 +38,35 @@ function drawTable(jasons, elementId, isJson) {
     let html = '';
 
     if (jasons == '"error"' || jasons == '') {
-        document.getElementById(elementId).innerHTML = '情報を取得できませんでした。';
+        document.getElementById(elementId).innerHTML = '<div class="note_status">情報を取得できませんでした。</div>';
     } else {
         if (isJson) {
             // JSONのまま表示
             document.getElementById(elementId).innerHTML = '<span class="note_data_json">' + jasons + '</span>';
         } else {
             obj = JSON.parse(jasons);
-            html = '<table class="note_list"><tr>' + 
-                    //'<th>#</th>' + //列番号
-                    '<th><div class="note_title">' + 
-                    '<div>なまえ / ID</div><div>最終更新日</div></div></th></tr>'
+            html = '<div class="note_count">' + obj.length + '人</div><ul class="note_list">';
             for (let i = 0; i < obj.length; i++) {
                 let daydiff = obj[i].daydiff;
                 let lastupdated = obj[i].lastupdated;
-                if(daydiff == ''){
+                if (daydiff == '') {
                     daydiff = '記事なし';
                 }
-                if(lastupdated == ''){
+                if (lastupdated == '') {
                     lastupdated = '-';
                 }
 
-                html += '<tr>' + 
-                    //'<td class="note_data_id">' + (i + 1) + '</td>' + //列番号
-                    '<td>' +
-                    '<div class="note_data_container">' +
-                    '<div class="note_icon"><a href="' + obj[i].url + '" target="_blank">' + 
-                    '<img class="note_icon_img" src="' + obj[i].userProfileImagePath + '"></a></div>' + 
-                    '<div class="note_username">' + 
-                    '<div class="note_username_nickname"><a href="' + obj[i].url + '" target="_blank">' + obj[i].nickname + '</a></div>' + 
-                    '<div class="note_data_name">' + obj[i].urlname + '</div></div>' + 
-                    '<div class="note_daydiff"><div><b>' + daydiff + '</b></div>' +
-                    '<div>' + lastupdated + '</div></div>' +
-                    '</div></td></tr>';
+                html += '<li class="note_item">' +
+                    '<a href="' + obj[i].url + '" target="_blank" rel="noopener">' +
+                    '<img class="note_avatar" src="' + obj[i].userProfileImagePath + '" alt="">' +
+                    '<span class="note_body">' +
+                    '<span class="note_data_name">' + obj[i].nickname + '</span>' +
+                    '<span class="note_data_id">@' + obj[i].urlname + '</span>' +
+                    '</span>' +
+                    '<span class="note_updated"><b>' + daydiff + '</b>' + lastupdated + '</span>' +
+                    '</a></li>';
             }
-            html += '</table>';
+            html += '</ul>';
 
             document.getElementById(elementId).innerHTML = html;
         }
